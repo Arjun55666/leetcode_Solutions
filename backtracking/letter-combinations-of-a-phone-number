@@ -1,0 +1,41 @@
+class Solution {
+    Map<Character, String> mp;
+    List<String> ans;
+
+    private void solve(int idx, String digits, StringBuilder sb) {
+        // Reached the end - we have a valid combination
+        if (idx == digits.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+        
+        String letters = mp.get(digits.charAt(idx));
+        for (char c : letters.toCharArray()) {
+            sb.append(c);
+            solve(idx + 1, digits, sb);
+            sb.setLength(sb.length() - 1);  // Backtrack
+        }
+    }
+
+    public List<String> letterCombinations(String digits) {
+        mp = getMap();
+        ans = new ArrayList<>();
+        if (digits.length() == 0)
+            return ans;
+        solve(0, digits, new StringBuilder());
+        return ans;
+    }
+
+    private Map<Character, String> getMap() {
+        Map<Character, String> map = new HashMap<>();
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
+        return map;
+    }
+}
