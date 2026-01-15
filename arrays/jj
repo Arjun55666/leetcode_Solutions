@@ -1,0 +1,38 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        HashMap<Integer, Boolean> map = new HashMap<>();
+
+        // Step 1: Build the map
+        for (int i = 0; i < nums.length; i++) {
+            int val = nums[i];
+
+            if (map.containsKey(val - 1)) {
+                map.put(val, false);
+            } else {
+                map.put(val, true);
+            }
+
+            if (map.containsKey(val + 1)) {
+                map.put(val, false);
+            }
+        }
+
+        // Step 2: Find longest streak
+        int ans = 0;
+        for (int key : map.keySet()) {
+            if (map.get(key)) { // only start from "true" (sequence start)
+                int count = 0;
+                int curr = key;
+
+                while (map.containsKey(curr)) {
+                    count++;
+                    curr++;
+                }
+
+                ans = Math.max(ans, count);
+            }
+        }
+
+        return ans;
+    }
+}
