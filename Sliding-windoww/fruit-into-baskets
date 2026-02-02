@@ -1,0 +1,27 @@
+class Solution {
+    public int totalFruit(int[] fruits) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int left=0;
+        int maxcount=0;
+        for(int right=0;right<fruits.length;right++){
+             int fruit = fruits[right];
+             //add fruit to window
+             map.put(fruit,map.getOrDefault(fruit,0)+1);
+            //shrink window if invalid 
+            while(map.size()>2){
+                int leftfruit=fruits[left];
+                map.put(leftfruit,map.get(leftfruit)-1);
+                if(map.get(leftfruit)==0){
+                map.remove(leftfruit);
+            }
+            left++;
+        }
+        //update answer for valid window
+            maxcount =Math.max(maxcount,right-left+1);
+            }
+            return maxcount;
+    }
+
+}
+//T.C(O(n))
+//s.C(O(1))
