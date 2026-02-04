@@ -1,0 +1,22 @@
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int totalsum =0;
+        int leftsum=0;
+        //total sum
+        for(int i=0;i<nums.length;i++){
+            totalsum+=nums[i];
+        }
+        //find pivot
+        for(int i=0;i<nums.length;i++){
+
+        //pivot condition
+       if(leftsum==totalsum-leftsum-nums[i]){
+            return i;
+         }
+       leftsum+=nums[i];//update after check1
+       }
+       return -1;
+    }
+}
+    //leftsum is the running prefix sum
+    //i used a running prefix sum so that left sums are reused instead of recomputed 
