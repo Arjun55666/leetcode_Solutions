@@ -1,0 +1,21 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count=0;
+        int currsum=0;//current prefix sum or running sum
+        HashMap<Integer,Integer> map = new HashMap<>();//key prefixsum and value is frequency
+        map.put(0,1);//one way to have prefix sum 0 from starting
+        for(int i=0;i<nums.length;i++){
+            currsum+=nums[i];
+           //checking if valid subarray ends here
+           int need=currsum-k;
+           count+=map.getOrDefault(need,0);//each earlier occurence of need gives one validsubarray ending here
+           map.put(currsum,map.getOrDefault(currsum,0)+1);
+        }
+        return count;
+
+    
+    }
+
+}
+//T.C(O(N))
+//S.C(T(N))
