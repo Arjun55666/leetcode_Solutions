@@ -1,0 +1,30 @@
+class Solution {
+    public int findMaxLength(int[] nums) {
+        int currsum=0;//running prefix sum
+        int maxlen=0;
+        HashMap<Integer,Integer> prefixsum = new HashMap<>();//key = prefix sum value , value= first index where this prefix sum appeared 
+        prefixsum.put(0,-1);//prefix sum before array starts
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0){
+                currsum--;
+            }
+            else{
+                currsum++;
+            }
+            if(prefixsum.containsKey(currsum)){
+                maxlen=Math.max(maxlen,i-prefixsum.get(currsum));
+            }
+            else{
+                prefixsum.put(currsum,i);//first occurence
+            }
+        }
+         return maxlen;
+  
+     }
+}
+//we convert 0 to -1 to transform  equal counts into sum =0
+//at every index currsum represents the diffrence between the number of 1s and  0s seen so far 
+//repeated prefix sum means the valid subarray between them sums to 0
+//we need frequency because multiple past occurences create multiple valid subarrays
+
+//each previous occurence of prefix sum creates a valid subarray ending here 
