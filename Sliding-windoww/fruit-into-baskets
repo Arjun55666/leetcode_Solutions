@@ -2,7 +2,7 @@ class Solution {
     public int totalFruit(int[] fruits) {
         HashMap<Integer,Integer> map = new HashMap<>();
         int left=0;
-        int maxcount=0;
+        int maxcount=0; 
         for(int right=0;right<fruits.length;right++){
              int fruit = fruits[right];
              //add fruit to window
