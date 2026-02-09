@@ -1,0 +1,80 @@
+class Solution {
+    public String minWindow(String s, String t) {
+
+        // If source string is smaller than target, no valid window possible
+        if (s.length() < t.length()) return "";
+
+        // Frequency map of characters required from string t
+        // Example: t = "AABC" → need = {A=2, B=1, C=1}
+        HashMap<Character, Integer> need = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            need.put(t.charAt(i), need.getOrDefault(t.charAt(i), 0) + 1);
+        }
+
+        // Frequency map for the current sliding window
+        HashMap<Character, Integer> window = new HashMap<>();
+
+        // Sliding window pointers
+        int left = 0;
+        int right = 0;
+
+        // Number of unique characters whose required frequency is satisfied
+        int formed = 0;
+
+        // Total unique characters required
+        int required = need.size();
+
+        // Result variables
+        int minLen = Integer.MAX_VALUE;
+        int startIndex = 0;
+
+        // Expand the window by moving the right pointer
+        while (right < s.length()) {
+            char c = s.charAt(right);
+
+            // Add current character to window frequency
+            window.put(c, window.getOrDefault(c, 0) + 1);
+
+            // If character is required and frequency just matches the requirement
+            if (need.containsKey(c) && window.get(c).intValue() == need.get(c).intValue()) {
+                formed++;
+            }
+
+            // Try shrinking the window while it remains valid
+            while (left <= right && formed == required) {
+
+                // Update minimum window if current one is smaller
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    startIndex = left;
+                }
+
+                // Remove the leftmost character from the window
+                char removeChar = s.charAt(left);
+                window.put(removeChar, window.get(removeChar) - 1);
+
+                // If a required character falls below needed frequency,
+                // window becomes invalid
+                if (need.containsKey(removeChar)
+                        && window.get(removeChar) < need.get(removeChar)) {
+                    formed--;
+                }
+
+                // Shrink window
+                left++;
+            }
+
+            // Expand window
+            right++;
+        }
+
+        // RETURN STATEMENT:
+        // If no valid window was found, return empty string
+        // Otherwise return the minimum window substring
+        return minLen == Integer.MAX_VALUE
+                ? ""
+                : s.substring(startIndex, startIndex + minLen);
+    }
+}
+T.C(O(M+N))
+S.C(O(1))
