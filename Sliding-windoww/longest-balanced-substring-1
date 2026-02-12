@@ -1,0 +1,31 @@
+class Solution {
+    public int longestBalanced(String s) {
+        int n = s.length();
+        // Try all possible substring lengths from longest to shortest
+        for (int len = n; len >= 1; len--) {
+            // Slide window of size 'len' across the string
+            for (int start = 0; start + len <= n; start++) {
+                int[] freq = new int[26];
+                // Count character frequencies in current window
+                for (int i = start; i < start + len; i++) {
+                    freq[s.charAt(i) - 'a']++;
+                }
+                // Check if all nonzero frequencies are the same
+                int same = 0;
+                boolean balanced = true;
+                for (int f : freq) {
+                    if (f > 0) {
+                        if (same == 0) same = f;
+                        else if (f != same) {
+                            balanced = false;
+                            break;
+                        }
+                    }
+                }
+                if (balanced) return len; // Found the longest, return right away
+            }
+        }
+        return 0; // No balanced substring found
+    }
+}
+
