@@ -6,7 +6,7 @@ class Solution {
             // Slide window of size 'len' across the string
             for (int start = 0; start + len <= n; start++) {
                 int[] freq = new int[26];
-                // Count character frequencies in current window
+                // Count character frequencies in current window 
                 for (int i = start; i < start + len; i++) {
                     freq[s.charAt(i) - 'a']++;
                 }
