@@ -6,7 +6,7 @@ This repository contains curated LeetCode solutions focused on **DSA patterns** 
 - Arrays
 - Strings
 - Hashing
-- Two Pointers
+- Two Pointers 
 - Sliding Window
 
 ## Goal
