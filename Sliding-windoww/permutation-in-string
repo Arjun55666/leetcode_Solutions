@@ -1,0 +1,36 @@
+import java.util.Arrays;
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+
+        // Step 1: Create frequency array for s1 (need)
+        int[] need = new int[26];
+        for(int i = 0; i < s1.length(); i++){
+            need[s1.charAt(i) - 'a']++;   // count frequency of each char in s1
+        }
+
+        // Step 2: Create window frequency array
+        int[] window = new int[26];
+
+        // Step 3: Traverse s2 using right pointer
+        for(int right = 0; right < s2.length(); right++){
+
+            // Add current character to window
+            window[s2.charAt(right) - 'a']++;
+
+            // Step 4: Maintain fixed window size
+            // If window size exceeds s1 length, remove leftmost character
+            if(right >= s1.length()){
+                window[s2.charAt(right - s1.length()) - 'a']--;
+            }
+
+            // Step 5: Check if window matches need (exact frequency match)
+            if(Arrays.equals(need, window)){
+                return true;   // permutation found
+            }
+        }
+
+        // Step 6: If no permutation found
+        return false;
+    }
+}
