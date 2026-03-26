@@ -1,36 +1,27 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        ArrayList<Integer> ans= new ArrayList<>();
-        int pfreq []=new int [256];
-        int sfreq []=new int [256];
-        int low=0;
-        int len=0;
-        for(int i=0;i<p.length(); i++){
-            pfreq[p.charAt(i)]++;
+        List<Integer> result = new LinkedList<>();
+    
+        int[] need = new int[26];//freq array of string p
+        for(int i=0;i<p.length();i++){
+            need[p.charAt(i)-'a']++;
         }
-        for(int high=0; high<s.length(); high++){
-               sfreq[s.charAt(high)]++;
-               len=high-low+1;
-            
-               while(len>p.length()){
-                    sfreq[s.charAt(low)]--;
-                    low++;
-                    len = high - low + 1;
-                   
-               }
-                     if(isAnagram(sfreq,pfreq)){
-                    ans.add(low);
-                  }
-        }
-        return ans;
-    }
-
-    public boolean isAnagram(int []sfreq, int [] pfreq){
-        for(int i=0;i<256; i++ ){
-            if(pfreq[i]!=sfreq[i]){
-                return false;
+        int[] window = new int[26];//current  window freq array
+        int startIndex=0;
+        //traverse s using right pointer
+        for(int right=0;right<s.length();right++){
+            //add character
+            window[s.charAt(right)-'a']++;
+            //if windowsize exceeds p length then remove leftmost character
+            if(right>=p.length()){
+                window[s.charAt(right-p.length())-'a']--;
+            }
+            //check match 
+            if(Arrays.equals(need,window)){
+                startIndex=right-p.length()+1;
+                result.add(startIndex);
             }
         }
-        return true;
-    }
+        return result;
+        }
 }
