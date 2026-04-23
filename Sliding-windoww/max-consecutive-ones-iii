@@ -1,0 +1,22 @@
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int maxLen=0;
+        int zeroCount=0;
+        int left=0;
+        for(int right=0;right<nums.length;right++){
+            if(nums[right]==0){
+                zeroCount++;
+            }
+            //this is important step cant use if because that will shrink only one time and window can still be invalid and while loop will keep shrinking until window becomes valid again and then only right will move and maxlen will update only when window is valid
+            //invalid window
+            while(zeroCount>k){
+                if(nums[left]==0){
+                    zeroCount--;
+                }
+                left++;
+            }
+            maxLen=Math.max(right-left+1,maxLen);
+    }
+    return maxLen;
+}
+}
