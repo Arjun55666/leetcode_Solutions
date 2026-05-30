@@ -4,7 +4,7 @@ class Solution {
         int distinctCount=0;
         int maxLen=0;
         HashMap<Character,Integer> freq = new HashMap<>();
-        int left=0;
+        int left=0; 
         for(int right=0;right<s.length();right++){
             freq.put(s.charAt(right),freq.getOrDefault(s.charAt(right),0)+1);
             if(freq.get(s.charAt(right))==1){
