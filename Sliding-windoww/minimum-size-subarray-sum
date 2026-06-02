@@ -1,0 +1,23 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int windowSum=0;
+        int minLen=Integer.MAX_VALUE;
+        int left=0;
+        for(int right=0;right<nums.length;right++){
+            windowSum+=nums[right];
+            //window is valid here 
+            while(windowSum>=target){
+                minLen=Math.min(minLen,right-left+1);
+                windowSum-=nums[left];
+                left++;
+            }
+            
+        }
+        //edge case
+        if(minLen == Integer.MAX_VALUE)
+        return 0;
+        return minLen;
+    }
+}
+//T.C O(n)
+//S.C O(1)
